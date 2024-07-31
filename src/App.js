@@ -56,10 +56,10 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const eResponse = await axios.get("https://gazra.org/api/events/");
+        const eResponse = await axios.get("https://gazra.org/gazra/api/events/");
         setEvents(eResponse.data);
 
-        const iResponse = await axios.get("https://gazra.org/api/initiatives/");
+        const iResponse = await axios.get("https://gazra.org/gazra/api/initiatives/");
         setInitiatives(iResponse.data);
       } catch (error) {
         setSnackbar({
@@ -132,7 +132,7 @@ function App() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "https://gazra.org/api/student-volunteers/",
+        "https://gazra.org/gazra/api/student-volunteers/",
         formDataToSubmit,
         {
           headers: {
