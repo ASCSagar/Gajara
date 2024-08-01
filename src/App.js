@@ -18,7 +18,12 @@ import PersonalInfo from "./components/PersonalInfo";
 import AcademicInfo from "./components/AcademicInfo";
 import VolunterInfo from "./components/VolunterInfo";
 import Review from "./components/Review";
-import { Alert, ColorlibConnector, ColorlibStepIcon, PageBackground } from "./mui";
+import {
+  Alert,
+  ColorlibConnector,
+  ColorlibStepIcon,
+  PageBackground,
+} from "./mui";
 
 const steps = [
   "Personal Information",
@@ -41,8 +46,8 @@ function App() {
     event: "",
     initiative: "",
     work_duration_months: "",
-    resume: null,
-    photograph: null,
+    resume: "",
+    photograph: "",
   });
 
   const [events, setEvents] = useState([]);
@@ -56,10 +61,14 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const eResponse = await axios.get("https://gazra.org/gazra/api/events/");
+        const eResponse = await axios.get(
+          "https://gazra.org/gazra/api/events/"
+        );
         setEvents(eResponse.data);
 
-        const iResponse = await axios.get("https://gazra.org/gazra/api/initiatives/");
+        const iResponse = await axios.get(
+          "https://gazra.org/gazra/api/initiatives/"
+        );
         setInitiatives(iResponse.data);
       } catch (error) {
         setSnackbar({
@@ -126,19 +135,24 @@ function App() {
 
     const formDataToSubmit = new FormData();
     Object.keys(formData).forEach((key) => {
-      formDataToSubmit.append(key, formData[key]);
+      if (
+        formData[key] !== "" &&
+        formData[key] !== null &&
+        formData[key] !== undefined
+      ) {
+        formDataToSubmit.append(key, formData[key]);
+      }
     });
 
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.post(
         "https://gazra.org/gazra/api/student-volunteers/",
         formDataToSubmit,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
+          withCredentials: true,
         }
       );
       console.log("Response", response);
