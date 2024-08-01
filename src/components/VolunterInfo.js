@@ -1,12 +1,7 @@
 import React from "react";
-import { TextField, Grid, MenuItem, Button } from "@mui/material";
+import { Grid, TextField, MenuItem, Button } from "@mui/material";
 
-const VolunterInfo = ({
-  formData,
-  handleFormChange,
-  events,
-  initiatives,
-}) => {
+const VolunterInfo = ({ formData, handleFormChange, events, initiatives }) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
